@@ -28,3 +28,58 @@ int32 test_split_valToList()
     cout << endl;
     return 0;
 }
+
+template <class T>
+T CArr<T>::operator[](int index)
+{
+    return this->m_pT[index];
+}
+
+template <class T>
+void CArr<T>::push_back(const T &v)
+{
+    // 数组非空
+    if (this->m_pT)
+    {
+        T *temp = new T[this->m_size + 1];
+        // 拷贝原数组的内容
+        memcpy(temp, this->m_pT, sizeof(T) * this->m_size);
+        delete[] this->m_pT;
+        this->m_pT = temp;
+    }
+    else
+    {
+        this->m_pT = new T[1];
+    }
+    this->m_pT[this->m_size++] = v;
+}
+
+template <class T>
+int32 CArr<T>::lenth() const
+{
+    return this->m_size;
+}
+
+template <class T>
+CArr<T>::~CArr()
+{
+    if (this->m_pT)
+    {
+        delete[] this->m_pT;
+        this->m_pT = NULL;
+    }
+}
+
+void test_CArr()
+{
+    CArr<int32> arr;
+    for (int index = 0; index < 10; index++)
+    {
+        arr.push_back(index * 10);
+    }
+
+    for(int index = 0; index < 10;index++)
+    {
+        cout << arr[index] << endl; 
+    }
+}
