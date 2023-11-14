@@ -109,3 +109,26 @@ static int32 getDate(int32 days)
 
     return year * 10000 + mon * 100 + days;
 }
+
+/**
+ * @name:
+ * @msg:
+ * @param {string} &strTime
+ * @return {*}
+ */
+static int64 timeToDateTime_int64(const std::string &strTime)
+{
+    double time_zone = 8;
+    int64 time = atoll(strTime.c_str());
+    int64 tmp_time = time + int32(time_zone * 3600);
+    // 当前时间距离1970年有多少天
+    int32 days = tmp_time / 86400;
+    // 转换成日期
+    int32 date = getDate(days + 1);
+    int32 sec = tmp_time - days * 86400;
+    int32 hour = sec / 3600;
+    int32 min = (sec - hour * 3600) / 60;
+    sec -= (hour * 3600 + min * 60);
+
+    return date * 1000000LL + hour * 10000LL + min * 100LL + sec;
+}
