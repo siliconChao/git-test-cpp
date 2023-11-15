@@ -28,6 +28,7 @@ public:
 class CUserFunc
 {
 public:
+    // C++中 常量必须使用成员初始化列表进行初始化
     CUserFunc() : m_pInt(NULL), m_in(0) {}
 
 public:
